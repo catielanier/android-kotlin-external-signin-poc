@@ -4,18 +4,22 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
+import timber.log.Timber
 
 class WebviewActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview)
 
-        val bun = Bundle().apply {
-            val redirectUri = intent.getStringExtra(REDIRECT_URI)
-            val url = intent.getStringExtra(URL)
-            putString(REDIRECT_URI, redirectUri)
-            putString(URL, url)
-        }
+    }
+
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+        val redirectUri = intent.getStringExtra(REDIRECT_URI)
+        val url = intent.getStringExtra(URL)
+        Timber.d("__webViewActivity | redirectUri: $redirectUri; url: $url")
+        return super.onCreateView(name, context, attrs)
     }
     companion object {
         const val URL = "url"

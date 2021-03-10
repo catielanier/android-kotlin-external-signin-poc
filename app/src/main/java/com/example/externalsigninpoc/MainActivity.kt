@@ -23,7 +23,9 @@ class MainActivity : AppCompatActivity() {
         val fbSignInButton: Button = findViewById(R.id.btn_facebook_signin)
 
         fbSignInButton.setOnClickListener {
-            val webviewIntent = WebviewActivity.newIntent(this, url, redirectUri)
+            val webviewIntent = Intent(this, WebviewActivity::class.java)
+            webviewIntent.putExtra("url", url)
+            webviewIntent.putExtra("redirectUri", redirectUri)
             startActivityForResult(webviewIntent, REQ_WEBVIEW)
         }
     }
