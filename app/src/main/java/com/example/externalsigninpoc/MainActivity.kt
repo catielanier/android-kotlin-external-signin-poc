@@ -1,7 +1,10 @@
 package com.example.externalsigninpoc
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
@@ -26,5 +29,14 @@ class MainActivity : AppCompatActivity() {
     }
     companion object {
         const val REQ_WEBVIEW = 2001
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_WEBVIEW && resultCode == Activity.RESULT_OK) {
+            Toast.makeText(this, "Signin success", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Signin cancelled", Toast.LENGTH_SHORT).show()
+        }
     }
 }
