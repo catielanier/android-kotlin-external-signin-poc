@@ -15,11 +15,16 @@ class MainActivity : AppCompatActivity() {
         val state = UUID.randomUUID().toString()
         val baseURL: String = "https://www.facebook.com/v7.0/dialog/oauth"
         val url: String = "${baseURL}?client_id=${fbAppId}&redirect_uri=${callbackScheme}://authorize&scope=${permissionScopes.joinToString(",")}&response_type=code%20granted_scopes&state=${state}"
+        val redirectUri: String = "${callbackScheme}://authorize"
 
         val fbSignInButton: Button = findViewById(R.id.btn_facebook_signin)
 
         fbSignInButton.setOnClickListener {
-
+            val webviewIntent = WebviewActivity.newIntent(this, url, redirectUri)
+            startActivityForResult(webviewIntent, REQ_WEBVIEW)
         }
+    }
+    companion object {
+        const val REQ_WEBVIEW = 2001
     }
 }
