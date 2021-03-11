@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_WEBVIEW && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(this, "Signin success", Toast.LENGTH_SHORT).show()
+            val token = data?.getStringExtra("token")
+            Toast.makeText(this, "Signin success; FB Oauth: $token", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Signin cancelled", Toast.LENGTH_SHORT).show()
         }
