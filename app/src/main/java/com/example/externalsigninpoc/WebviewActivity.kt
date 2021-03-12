@@ -24,21 +24,29 @@ class WebviewActivity : Activity() {
         val fbWebview = findViewById<WebView>(R.id.webview_facebook)
         fbWebview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                println("__shouldOverrideUrlLoading: $url")
+                println("$redirectUri")
                if (url!!.startsWith(redirectUri!!)) {
-                   Timber.d("We're redirecting back to the main activity with the token")
-                   Timber.d("__url: $url")
+                   println("We're redirecting back to the main activity with the token")
+                   println("__url: $url")
 
                    var token: String
                    var returnedState: String
-                   val queryDelimiters = Regex("([?&])+")
+                   val queryDelimiters = Regex("([?&#])+")
                    val queryArr = url.split(queryDelimiters)
                    returnedState = queryArr[4].replace("state=", "")
+                   println("state = $returnedState")
+                   println("local state = $state")
                    if (returnedState == state) {
+
                        token = queryArr[1].replace("code=", "")
+                       println("token = $token")
                        val returnIntent = Intent().putExtra("token", token)
                        setResult(RESULT_OK, returnIntent)
                        finish()
                    }
+               } else {
+                   println("hell i don't fuggin no")
                }
                 return false
             }
