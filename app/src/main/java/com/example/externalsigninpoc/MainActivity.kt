@@ -19,25 +19,67 @@ class MainActivity : AppCompatActivity() {
         val baseURL: String = "https://www.facebook.com/v7.0/dialog/oauth"
         val url: String = "${baseURL}?client_id=${fbAppId}&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=${permissionScopes.joinToString(",")}&response_type=code%20granted_scopes&state=${state}"
         val redirectUri: String = "https://www.facebook.com/connect/login_success.html"
+        val googleAppId: String = "475285862498-ital3fg4f1q6d77c053dbuud0mjscmfl.apps.googleusercontent.com"
+        val userAgent: String = "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6265; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.110 Mobile Safari/537.36"
 
         val fbSignInButton: Button = findViewById(R.id.btn_facebook_signin)
+        val googleSignInButton: Button = findViewById(R.id.btn_google_signin)
 
         fbSignInButton.setOnClickListener {
-            val webviewIntent = WebviewActivity.newIntent(this, url, redirectUri, state)
+            val webviewIntent = WebviewActivity.newIntent(
+                    this,
+                    url,
+                    redirectUri,
+                    state
+            )
             startActivityForResult(webviewIntent, REQ_WEBVIEW)
+        }
+
+        googleSignInButton.setOnClickListener {
+            val webviewIntent = GoogleWebviewActivity.newIntent(
+                    this,
+                    googleAppId,
+                    "",
+                    "",
+                    userAgent
+            )
+
+            startActivityForResult(webviewIntent, REQ_GOOGLE_WEBVIEW)
         }
     }
     companion object {
         const val REQ_WEBVIEW = 2001
+        const val REQ_GOOGLE_WEBVIEW = 2002
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_WEBVIEW && resultCode == Activity.RESULT_OK) {
+        if (
+                requestCode == REQ_WEBVIEW &&
+                resultCode == Activity.RESULT_OK
+        ) {
             val token = data?.getStringExtra("token")
-            Toast.makeText(this, "Signin success; FB Oauth: $token", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                    this,
+                    "Signin success; FB Oauth: $token",
+                    Toast.LENGTH_SHORT
+            ).show()
+        } else if (
+                requestCode == REQ_GOOGLE_WEBVIEW &&
+                requestCode == Activity.RESULT_OK
+        ) {
+            val token = data?.getStringExtra("token")
+            Toast.makeText(
+                    this,
+                    "Signin Success: Google Token $token",
+                    Toast.LENGTH_SHORT
+            ).show()
         } else {
-            Toast.makeText(this, "Signin cancelled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                    this,
+                    "Signin cancelled",
+                    Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
