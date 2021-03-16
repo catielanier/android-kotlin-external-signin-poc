@@ -5,7 +5,7 @@
     tools:context=".GoogleWebviewActivity"
     android:layout_height="match_parent">
     <WebView
-        android:id="@+id/webview_facebook"
+        android:id="@+id/webview_google"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

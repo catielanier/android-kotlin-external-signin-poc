@@ -19,8 +19,9 @@ class MainActivity : AppCompatActivity() {
         val baseURL: String = "https://www.facebook.com/v7.0/dialog/oauth"
         val url: String = "${baseURL}?client_id=${fbAppId}&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=${permissionScopes.joinToString(",")}&response_type=code%20granted_scopes&state=${state}"
         val redirectUri: String = "https://www.facebook.com/connect/login_success.html"
-        val googleAppId: String = "475285862498-ital3fg4f1q6d77c053dbuud0mjscmfl.apps.googleusercontent.com"
         val userAgent: String = "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6265; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.110 Mobile Safari/537.36"
+        val googleUrl: String = "https://cwl-google-signin-web-test.vercel.app"
+        val googleRedirectUri: String = "https://cwl-google-signin-web-test.vercel.app/result/"
 
         val fbSignInButton: Button = findViewById(R.id.btn_facebook_signin)
         val googleSignInButton: Button = findViewById(R.id.btn_google_signin)
@@ -38,9 +39,8 @@ class MainActivity : AppCompatActivity() {
         googleSignInButton.setOnClickListener {
             val webviewIntent = GoogleWebviewActivity.newIntent(
                     this,
-                    googleAppId,
-                    "",
-                    "",
+                    googleRedirectUri,
+                    googleUrl,
                     userAgent
             )
 
